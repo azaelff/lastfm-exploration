@@ -21,4 +21,5 @@ else:
 show_conan = st.sidebar.checkbox("Show Conan Gray Top Albums")
 
 if show_conan:
-    st.write(artist.getTopAlbums())
+    url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=conan_gray&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
+    st.write(requests.get(url))
