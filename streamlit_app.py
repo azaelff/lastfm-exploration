@@ -5,7 +5,10 @@ import math
 from pathlib import Path
 
 st.title("Explore The last.fm API")
-st.write(f'''
+if "token" in st.query_params:
+    st.write("API Enabled")
+else:
+    st.write(f'''
          <a target="_self" href="http://www.last.fm/api/auth/?api_key=68ec0071f9e7750afbd8f8f53d9659e0">
             <button>
                 Enable API
@@ -13,4 +16,4 @@ st.write(f'''
          </a>
         ''',
         unsafe_allow_html=True
-)
+    )
