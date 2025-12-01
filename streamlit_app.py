@@ -17,3 +17,8 @@ else:
         ''',
         unsafe_allow_html=True
     )
+
+show_conan = st.sidebar.checkbox("Show Conan Gray Top Albums")
+
+if show_conan:
+    st.write(artist.getTopAlbums())
