@@ -19,7 +19,17 @@ else:
     )
 
 show_conan = st.sidebar.checkbox("Show Conan Gray Top Tags")
-
 if show_conan:
     url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist=Conan+Gray&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
     st.write(requests.get(url).json())
+
+choose_artist = st.text_input("Which Artist Do You Like?")
+if choose_artist:
+    url = f"http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist={choose_artist}&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
+    # requests.get(url).json()["toptags"]["tag"]
+
+    for tag in requests.get(url).json()["toptags"]["tag"]:
+        tagname = tag["name"]
+        url = f"http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag={tagname}&limit=3&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
+        st.write(requests.get(url).json())
+
