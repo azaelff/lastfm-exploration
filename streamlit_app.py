@@ -41,5 +41,5 @@ if choose_artist:
                times[artist["name"]] += 1
     
     st.write(times)
-    st.write(requests.get(urltwo).json()["toptags"]["tag"])
+    st.write(requests.get(urltwo).json()["topartists"]["artist"])
 
