@@ -29,7 +29,7 @@ if choose_artist:
     tags = requests.get(url).json()["toptags"]["tag"]
     countweight = {}
     for name in tags:
-        countweight[tag["name"]] = (100-("count"))/10
+        countweight[tag["name"]] = (100-tag["count"])/10
 
     times = {}
 
