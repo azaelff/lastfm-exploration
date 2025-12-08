@@ -26,9 +26,9 @@ if show_conan:
 choose_artist = st.text_input("Which Artist Do You Like?")
 if choose_artist:
     url = f"http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist={choose_artist}&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
-    # requests.get(url).json()["toptags"]["tag"]
+    tags = requests.get(url).json()["toptags"]["tag"]
     countweight = {}
-    for name in tag:
+    for name in tags:
         countweight[tag["name"]] = (100-("count"))/10
 
     times = {}
