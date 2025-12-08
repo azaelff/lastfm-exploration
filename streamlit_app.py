@@ -18,6 +18,16 @@ else:
         ''',
         unsafe_allow_html=True
     )
+niche = st.sidebar.select_slider("How niche would you like your recommendations?", ["Not Niche", "Sort of Niche", "Niche", "Very Niche"])
+st.sidebar.write(f"Showing {niche} artists")
+if niche == "Not Niche":
+    lim = 3
+if niche == "Sort of Niche":
+    lim = 10
+if niche == "Niche":
+    lim = 25
+if niche == "Very Niche":
+    lim = 50
 
 show_conan = st.sidebar.checkbox("Show Conan Gray Top Tags")
 if show_conan:
@@ -36,7 +46,7 @@ if choose_artist:
 
     for tag in requests.get(url).json()["toptags"]["tag"]:
         tagname = tag["name"]
-        urltwo = f"http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag={tagname}&limit=3&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
+        urltwo = f"http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag={tagname}&limit={lim}&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
         artists = requests.get(urltwo).json()["topartists"]["artist"]
         for artist in artists:
             existingRow = data[data["artist"]==artist["name"]]
@@ -50,5 +60,5 @@ if choose_artist:
 
     
 
-    st.write(data.sort_values("value", ascending=False))
+    st.write(data.sort_values("value", ascending=False).reset_index())
 
