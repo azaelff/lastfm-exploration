@@ -5,7 +5,7 @@ import math
 from pathlib import Path
 import numpy as np
 
-st.title("Explore The last.fm API")
+st.title("[L]ast.fm Artist Recommendation Algorithm")
 if "token" in st.query_params:
     st.write("API Enabled")
 else:
@@ -36,6 +36,7 @@ if show_conan:
 
 choose_artist = st.text_input("Which Artist Do You Like?")
 if choose_artist:
+    st.write(f"Similar Artists to {choose_artist}:")
     url = f"http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist={choose_artist}&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
     tags = requests.get(url).json()["toptags"]["tag"]
     countweight = {}
