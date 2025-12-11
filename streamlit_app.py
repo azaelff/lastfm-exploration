@@ -41,7 +41,7 @@ if choose_artist:
     tags = requests.get(url).json()["toptags"]["tag"]
     countweight = {}
     for tag in tags:
-        countweight[tag["name"]] = (100-tag["count"])/10
+        countweight[tag["name"]] = tag["count"]/10
 
     data = pd.DataFrame([], columns = ["artist", "tags", "value"])
 
@@ -51,7 +51,7 @@ if choose_artist:
         artists = requests.get(urltwo).json()["topartists"]["artist"]
         for artist in artists:
             existingRow = data[data["artist"]==artist["name"]]
-            value = 10/19*(20 - (countweight[tagname] + int(artist["@attr"]["rank"])))
+            value = countweight[tagname]/10 + 100/(10+int(artist["@attr"]["rank"]))
             if existingRow.empty:
                 data.loc[-1] = [artist["name"], [tagname], value]
                 data.index += 1
