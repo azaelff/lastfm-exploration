@@ -35,6 +35,7 @@ show_conan = st.sidebar.checkbox("Show Conan Gray Top Tags")
 if show_conan: 
     picture = st.sidebar.camera_input("Take a picture", disabled=not show_conan)
     if picture:
+        st.write("Profile Picture:")
         st.image(picture)
 
 choose_artist = st.text_input("Which Artist Do You Like?")
