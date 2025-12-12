@@ -32,7 +32,7 @@ maxNiche = st.sidebar.slider("Maximum artist ranking:", minNiche, 1000, min(minN
 st.sidebar.write(f"Showing artists ranked between #{minNiche} and #{maxNiche}")
 
 show_conan = st.sidebar.checkbox("Show Conan Gray Top Tags")
-picture = st.sidebar.camera_input("Take a picture", disabled=not show_conan)
+if show_conan: picture = st.sidebar.camera_input("Take a picture", disabled=not show_conan)
 if picture:
     st.image(picture)
 
