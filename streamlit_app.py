@@ -5,6 +5,13 @@ import math
 from pathlib import Path
 import numpy as np
 
+
+@st.cache_data
+def getArtists(tagName):
+    url = f"http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag={tagName}&limit=1000&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
+    return requests.get(url).json()["topartists"]["artist"]
+
+
 st.title("[L]ast.fm Artist Recommendation Algorithm")
 if "token" in st.query_params:
     st.sidebar.write("API Enabled")
@@ -57,9 +64,8 @@ if choose_artist:
 
     for tag in requests.get(url).json()["toptags"]["tag"]:
         tagname = tag["name"]
-        urltwo = f"http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag={tagname}&limit=1000&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
-        artists = requests.get(urltwo).json()["topartists"]["artist"]
-        for artist in artists[minNiche: maxNiche]:
+        artists = getArtists(tagname)
+        for artist in artists[minNiche:maxNiche]:
             existingRow = data[data["artist"]==artist["name"]]
             value = countweight[tagname]/10 + 100/(10+int(artist["@attr"]["rank"]))
             if data.index >= {filter}:
