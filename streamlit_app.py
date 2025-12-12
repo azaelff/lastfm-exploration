@@ -64,12 +64,13 @@ if choose_artist:
     df_final.index += 1
     st.write(df_final)
 
-st.write(f'''
-         <a href="https://forms.gle/ovHbXLhv2TcNYe2D6">
-            <button>
-                After testing the algorithm, Give us your thoughts!
-            </button>
-         </a>
-        ''',
-        unsafe_allow_html=True
-    )
+
+    st.write(f'''
+            <a href="https://forms.gle/ovHbXLhv2TcNYe2D6">
+                <button>
+                    After testing the algorithm, Give us your thoughts!
+                </button>
+            </a>
+            ''',
+            unsafe_allow_html=True
+        )
