@@ -18,16 +18,31 @@ else:
         ''',
         unsafe_allow_html=True
     )
+niche = st.sidebar.select_slider("How niche would you like your recommendations?", ["Not Niche", "Sort of Niche", "Niche", "Very Niche"])
+st.sidebar.write(f"Showing {niche} artists")
+if niche == "Not Niche":
+    lim = 3
+    filter = 0
+if niche == "Sort of Niche":
+    lim = 10
+    filter = 5
+if niche == "Niche":
+    lim = 25
+    filter = 20
+if niche == "Very Niche":
+    lim = 50
+    filter = 40
 
 st.sidebar.write("How niche would you like your recommendations?")
 minNiche = st.sidebar.slider("Minimum artist ranking:", 1, 999, 1)
 maxNiche = st.sidebar.slider("Maximum artist ranking:", minNiche, 1000, 1000)
 st.sidebar.write(f"Showing artists ranked between #{minNiche} and #{maxNiche}")
 
-show_conan = st.sidebar.checkbox("Show Conan Gray Top Tags")
-if show_conan:
-    url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist=Conan+Gray&api_key=68ec0071f9e7750afbd8f8f53d9659e0&format=json"
-    st.write(requests.get(url).json())
+show_conan = st.checkbox("Show Conan Gray Top Tags")
+picture = st.camera_input("Take a picture", disabled=not show_conan)
+
+if picture:
+    st.image(picture)
 
 choose_artist = st.text_input("Which Artist Do You Like?")
 if choose_artist:
@@ -47,12 +62,15 @@ if choose_artist:
         for artist in artists[minNiche: maxNiche]:
             existingRow = data[data["artist"]==artist["name"]]
             value = countweight[tagname]/10 + 100/(10+int(artist["@attr"]["rank"]))
-            if existingRow.empty:
-                data.loc[-1] = [artist["name"], [tagname], value]
-                data.index += 1
-            else:
-                data.at[existingRow.index[0], "tags"].append(tagname)
-                data.at[existingRow.index[0], "value"] += value
+            if data.index >= {filter}:
+                if existingRow.empty:
+                    data.loc[-1] = [artist["name"], [tagname], value]
+                    data.index += 1
+                else:
+                    data.at[existingRow.index[0], "tags"].append(tagname)
+                    data.at[existingRow.index[0], "value"] += value
+
+
     
     df_final = data.sort_values("value", ascending=False).reset_index(drop=True)
     df_final.index += 1
