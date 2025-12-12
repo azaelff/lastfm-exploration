@@ -28,7 +28,7 @@ else:
 
 st.sidebar.write("How niche would you like your recommendations?")
 minNiche = st.sidebar.slider("Minimum artist ranking:", 1, 999, 1)
-maxNiche = st.sidebar.slider("Maximum artist ranking:", minNiche, 1000, minNiche + 9)
+maxNiche = st.sidebar.slider("Maximum artist ranking:", minNiche, 1000, min(minNiche + 9, 1000))
 st.sidebar.write(f"Showing artists ranked between #{minNiche} and #{maxNiche}")
 
 show_conan = st.sidebar.checkbox("Show Conan Gray Top Tags")
